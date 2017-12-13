@@ -1,12 +1,35 @@
 function getDrivers() {
-    // Code - use fetchJson
+   return fetchJson("GET",'data/drivers.json');
 }
 
 function getAddresses() {
-    // Code
+  return fetchJson('GET','data/addresses.json')
 }
 
-function fetchJson(url) {
-    // Code
-    // return new Promise(function(resolve, reject) ........
+function fetchJson(methud,url) {
+   return new Promise(function(resolve,reject){
+    
+     var con = new XMLHttpRequest();
+     con.open(methud,url)
+     con.onload = function(){
+         resolve(con.responseText)
+     }
+     con.onerror =function(e){
+         reject(e)
+     }
+    con.send();
+        
+       
+   })
+}
+function getTemp(url){
+   return fetchJson('GET',url)
+}
+function diploytemp(temp,obj){
+    var keys=Object.keys(obj);
+            for(let i=0;i<keys.length;i++){
+              temp = temp.replace("{{"+keys[i]+"}}",obj[keys[i]]);
+           
+             }
+             return temp;
 }
